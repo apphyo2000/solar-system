@@ -27,7 +27,7 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
 
-      - name: Setup NodeJS Version - 18
+      - name: Setup NodeJS Version - ${{matrix.nodejs-version}}
         uses: actions/setup-node@v4
         with:
           node-version: ${{matrix.nodejs-version}}
@@ -43,3 +43,27 @@ jobs:
         with:
           name: Mocha-Test-Result-${{matrix.nodejs-version}}-${{matrix.operating-system}}
           path: test-results.xml
+  code-coverage:
+    name: Code Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Setup NodeJS Version - 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install npm dependencies
+        run: npm install
+
+      - name: Check Code Coverage
+        run: npm run coverage
+
+      - name: Archive Test Result
+        uses: actions/upload-artifact@v4
+        with:
+          name: Code-Coverage-Result
+          path: coverage
+          retention-days: 2

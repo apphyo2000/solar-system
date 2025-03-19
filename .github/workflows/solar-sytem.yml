@@ -23,7 +23,6 @@ jobs:
           - nodejs-version: 18
             operating-system: macos-latest
     runs-on: ${{matrix.operating-system}}
-    continue-on-error: true
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
@@ -37,10 +36,12 @@ jobs:
         run: npm install
 
       - name: Unit Testing
+        id: nodejs-unit-testing-step
         run: npm test
 
       - name: Archive the test result
         uses: actions/upload-artifact@v4
+        if: steps.nodejs-unit-testing-step.outcome == 'failure' || steps.nodejs-unit-testing-step.outcome == 'success'
         with:
           name: Mocha-Test-Result-${{matrix.nodejs-version}}-${{matrix.operating-system}}
           path: test-results.xml

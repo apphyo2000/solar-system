@@ -118,4 +118,4 @@ jobs:
           ${{vars.DOCKERHUB_USERNAME}}/solarsystem:${{github.sha}}
 
           echo Testing api of the app in the container
-          wget -q -O 127.0.0.1:3000/live | grep live
+          wget -q -O - 127.0.0.1:3000/live | grep live

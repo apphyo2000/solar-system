@@ -22,7 +22,7 @@ describe("Planets API Suite", () => {
 					res.body.should.have.property("id").eql(1);
 					res.body.should.have
 						.property("name")
-						.eql("Mercury-ERORRRRR");
+						.eql("Mercury");
 					done();
 				});
 		});

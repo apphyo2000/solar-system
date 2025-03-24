@@ -1,7 +1,11 @@
 {
-  "name": "Solar System",
+  "name": "@apphyo2000/solar-system",
   "version": "6.7.6",
   "author": "Siddharth Barahalikar <barahalikar.siddharth@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apphyo2000/solar-system.git"
+  },
   "homepage": "https://www.linkedin.com/in/barahalikar-siddharth/",
   "license": "MIT",
   "scripts": {

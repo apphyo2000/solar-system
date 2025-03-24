@@ -92,11 +92,20 @@ jobs:
     steps:
       - name: Check out the repository
         uses: actions/checkout@v4
+
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Login to Github Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ vars.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}      
+          
       - name: Docker build and push
         uses: docker/build-push-action@v6
         with:
@@ -114,14 +123,14 @@ jobs:
           -e MONGO_USERNAME=$MONGO_USERNAME \
           -e MONGO_PASSWORD=$MONGO_PASSWORD \
           ${{vars.DOCKERHUB_USERNAME}}/solarsystem:${{github.sha}}
-
           echo Testing api of the app in the container
           wget -q -O - 127.0.0.1:3000/live | grep live
 
-      - name: Pushing the image to docker hub
+      - name: Pushing the image to docker hub and ghcr
         uses: docker/build-push-action@v6
         with:
           context: . 
           push: true
           tags: |
             ${{vars.DOCKERHUB_USERNAME}}/solarsystem:${{github.sha}}
+            ghcr.io/${{vars.repository_owner}}/solarsystem:${{github.sha}}

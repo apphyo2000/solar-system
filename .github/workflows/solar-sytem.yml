@@ -117,3 +117,11 @@ jobs:
 
           echo Testing api of the app in the container
           wget -q -O - 127.0.0.1:3000/live | grep live
+
+      - name: Pushing the image to docker hub
+        uses: docker/build-push-action@v6
+        with:
+          context: . 
+          push: true
+          tags: |
+            ${{vars.DOCKERHUB_USERNAME}}/solarsystem:${{github.sha}}

@@ -8,7 +8,7 @@ on:
 jobs:
     publish-npm-package:
         name: publishing npm package
-        runs-on: ubunt-latest
+        runs-on: ubuntu-latest
         permissions:
             contents: read
             packages: write
